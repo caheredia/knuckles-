@@ -7,28 +7,23 @@ import time
 import os
 import asyncio
 
-images = os.listdir("images") * 2
+images = os.listdir("images") * 3
 
 
 async def fetch_string(image):
     start = time.time()
-    print("Start: " + image)
+    print("{}...starting".format(image))
     await asyncio.sleep(0.01)
-    data = pytesseract.image_to_string(Image.open("images/" + image))[0:10]
-    await asyncio.sleep(0.01)
-    print(data)
+    translation = pytesseract.image_to_string(Image.open("images/" + image))[0:5]
     end = time.time()
-    print(image + " time: {:.2f}".format(end - start))
+    metadata = image + ": " + translation + " time: {:.2f}".format(end - start)
+    print(metadata)
 
 
-async def main():
-    ## build list with image to string objects
-    futures = [fetch_string(image) for image in images]
-    await asyncio.gather(*futures)
+futures = [fetch_string(image) for image in images]
+loop = asyncio.get_event_loop()
+start = time.time()
+loop.run_until_complete(asyncio.wait(futures))
+end = time.time()
+print("Total time sanic and back {}".format(end - start))
 
-
-# loop = asyncio.get_event_loop()
-t0 = time.time()
-asyncio.run(main())
-tf = time.time()
-print("Total time to read files {}".format(tf - t0))
