@@ -22,8 +22,9 @@ async def fetch_string(response):
     translation = pytesseract.image_to_string(Image.open("images/" + image))[0:5]
     end = time.time()
     metadata = image + ": " + translation + " time: {:.2f}".format(end - start)
+    await asyncio.sleep(0)
     return text(metadata)
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, workers=2)
+    app.run(host="0.0.0.0", port=8000, workers=4)

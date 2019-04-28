@@ -5,7 +5,7 @@ import json
 import os
 
 url = "http://0.0.0.0:8000/convert"
-images = os.listdir("images") * 1
+images = os.listdir("images") * 2
 
 
 async def fetch_image(session, url, image):
