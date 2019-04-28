@@ -3,7 +3,11 @@ try:
 except ImportError:
     import Image
 import pytesseract
+import time
 
 # Simple image to string
-print(pytesseract.image_to_string(Image.open("test3.png")))
+start = time.time()
+print(pytesseract.image_to_string(Image.open("test.png"))[0:10])
+end = time.time()
+print("Time: {:.2f}".format(end - start))
 
